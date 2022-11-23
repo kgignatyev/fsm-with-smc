@@ -2,13 +2,13 @@ package com.xpansiv.demo.fsm.asset_transfer;
 
 public class TransferAssetsHandler {
 
-    String fromId;
-    String toId;
-    String ein;
-    Long quantity;
+    public String fromId;
+    public String toId;
+    public String ein;
+    public Long quantity;
 
 
-    public TransferAssetsHandler(String fromId, String toId, String ein, Long quantity) {
+    public TransferAssetsHandler( String fromId, String toId, String ein, Long quantity) {
         this.fromId = fromId;
         this.toId = toId;
         this.ein = ein;
@@ -41,5 +41,5 @@ public class TransferAssetsHandler {
     }
 
     public Boolean needsCPapproval() { return false; }
-    public Boolean doesNotNeedCPapproval() { return true; }
+
 }

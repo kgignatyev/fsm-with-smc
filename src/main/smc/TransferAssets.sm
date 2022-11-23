@@ -26,7 +26,7 @@
         WAITING_CP_DECISION {
         }
 
-        InitiateTransfer [ ctxt.doesNotNeedCPapproval() ]
+        InitiateTransfer [ !ctxt.needsCPapproval() ]
         PLACED_TO_CP {
         }
     }

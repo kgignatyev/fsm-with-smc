@@ -46,6 +46,14 @@
 
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>target/generated-sources/smc</directory>
+            </resource>
+        </resources>
         <plugins>
             <!-- https://mvnrepository.com/artifact/net.sf.smc/smc-maven-plugin -->
             <plugin>
