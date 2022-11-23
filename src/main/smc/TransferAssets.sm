@@ -1,0 +1,80 @@
+%package com.xpansiv.demo.fsm.asset_transfer
+
+%class TransferAssetsHandler
+
+
+%access public
+%start Main::STARTED
+
+%map Main %%
+    STARTED {
+        LockSenderFunds [ ctxt.hasSufficientFunds()]
+        SENDER_FUNDS_LOCKED {
+
+        }
+        LockSenderFunds [ ! ctxt.hasSufficientFunds()]
+        CANCELLED {}
+    }
+
+    SENDER_FUNDS_LOCKED
+      Entry {doSenderFundsLock();}
+    {
+        CancelTransfer
+        CANCELLED {}
+
+        InitiateTransfer [ ctxt.needsCPapproval()  ]
+        WAITING_CP_DECISION {
+        }
+
+        InitiateTransfer [ ctxt.doesNotNeedCPapproval() ]
+        PLACED_TO_CP {
+        }
+    }
+
+    WAITING_CP_DECISION
+       Entry {doRequestReceiverApproval();}
+    {
+        RejectedByCP
+        REJECTED {
+            onPlacementRejection();
+        }
+
+        ApprovedByCP
+        PLACED_TO_CP {
+        }
+
+        CancelTransfer
+        CANCELLED {}
+    }
+
+    PLACED_TO_CP
+      Entry { onPlacementToCp();}
+    {
+
+        ReceivedByRecepient
+        DONE {
+
+        }
+
+    }
+
+
+    REJECTED
+      Entry {returnAssetsToSender();}
+    {
+
+    }
+
+    CANCELLED
+        Entry {returnAssetsToSender();}
+    {
+
+    }
+
+    DONE
+        Entry {removeAssetsFromSender();}
+    {
+
+    }
+
+%%
